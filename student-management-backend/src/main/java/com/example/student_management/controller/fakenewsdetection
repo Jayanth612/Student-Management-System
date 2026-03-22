@@ -1,0 +1,108 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# ---------- Fake News Detection Logic ----------
+def predict_fake_news(text):
+    text = text.lower()
+
+    fake_keywords = ["shocking", "miracle", "secret leaked", "banned", "click here", "you won’t believe"]
+    real_keywords = ["report", "official", "research", "scientists", "evidence"]
+
+    fake_score = sum(k in text for k in fake_keywords)
+    real_score = sum(k in text for k in real_keywords)
+
+    if fake_score > real_score:
+        return "FAKE"
+    elif real_score > fake_score:
+        return "REAL"
+    else:
+        return "UNKNOWN"
+
+# ---------- FRONTEND (HTML + CSS + JS) ----------
+html_page = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake News Detection Demo</title>
+    <style>
+        body { font-family: Arial; background: #f2f4f8; }
+        .container {
+            width: 60%; margin: 50px auto; background: white;
+            padding: 30px; border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+        textarea {
+            width: 100%; height: 150px; padding: 15px;
+            border: 2px solid #ccc; border-radius: 10px;
+        }
+        button {
+            width: 100%; padding: 14px; margin-top: 10px;
+            background: #006eff; color: white; border: none;
+            border-radius: 10px; font-size: 18px; cursor: pointer;
+        }
+        button:hover { background: #004ec2; }
+        .result {
+            margin-top: 20px; padding: 20px; font-size: 20px;
+            text-align: center; border-radius: 10px;
+        }
+        .fake { background: #ffdddd; border: 2px solid #ff5b5b; color: #b30000; }
+        .real { background: #ddffdd; border: 2px solid #41c36c; color: #006600; }
+        .unsure { background: #fff7cc; border: 2px solid #ffd84d; color: #8a6d00; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fake News Detection Demo</h1>
+        <textarea id="newsInput" placeholder="Paste news text here..."></textarea>
+        <button onclick="detect()">Detect Fake News</button>
+        <div id="resultBox" class="result" style="display:none;"></div>
+    </div>
+
+<script>
+function detect() {
+    let text = document.getElementById("newsInput").value;
+
+    fetch("/detect", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ text: text })
+    })
+    .then(res => res.json())
+    .then(data => {
+        let box = document.getElementById("resultBox");
+        box.style.display = "block";
+
+        if (data.result === "FAKE") {
+            box.className = "result fake";
+            box.textContent = "🔴 FAKE NEWS DETECTED";
+        } else if (data.result === "REAL") {
+            box.className = "result real";
+            box.textContent = "🟢 REAL NEWS";
+        } else {
+            box.className = "result unsure";
+            box.textContent = "🟡 NOT SURE — NEEDS HUMAN CHECKING";
+        }
+    });
+}
+</script>
+
+</body>
+</html>
+"""
+
+# ---------- ROUTES ----------
+@app.route("/")
+def home():
+    return html_page
+
+@app.route("/detect", methods=["POST"])
+def detect():
+    data = request.json
+    text = data.get("text", "")
+    result = predict_fake_news(text)
+    return jsonify({"result": result})
+
+# ---------- RUN SERVER ----------
+if __name__ == "__main__":
+    app.run(debug=True)
