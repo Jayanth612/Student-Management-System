@@ -1,0 +1,123 @@
+/* 🌟 --- Form Container --- */
+.form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: var(--card-bg, #ffffff);
+  padding: 35px 45px;
+  border-radius: 16px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+body.dark .form-container {
+  border: 1px solid var(--border-color);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
+}
+
+.form-container:hover {
+  transform: translateY(-2px);
+}
+
+/* --- Form Title --- */
+.form-container h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  color: #1a237e;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+body.dark .form-container h2,
+body.dark .form-group label {
+  color: #eaf2ff;
+}
+
+/* --- Input Fields --- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 11px 14px;
+  border: 1px solid #cfd8dc;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  outline: none;
+  background-color: #fafafa;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 5px rgba(25, 118, 210, 0.3);
+  background-color: #fff;
+}
+
+/* --- Action Buttons --- */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.btn-save {
+  background: linear-gradient(90deg, #2196f3, #1976d2);
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-save:hover {
+  background: linear-gradient(90deg, #1976d2, #0d47a1);
+  transform: scale(1.05);
+}
+
+.btn-cancel {
+  background: #e0e0e0;
+  color: #333;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #bdbdbd;
+  transform: scale(1.05);
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 25px 25px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-save,
+  .btn-cancel {
+    width: 100%;
+  }
+}

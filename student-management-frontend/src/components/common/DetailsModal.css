@@ -1,0 +1,108 @@
+/* 🌌 DetailsModal.css — elegant popup modal styling */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-container {
+  background: #ffffff;
+  width: 420px;
+  max-width: 90%;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  padding: 30px 35px;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
+.modal-container:hover {
+  transform: translateY(-2px);
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  border: none;
+  background: none;
+  font-size: 22px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.close-btn:hover {
+  color: #e53935;
+  transform: scale(1.1);
+}
+
+.modal-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  border-bottom: 3px solid #c8e6c9;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.modal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.detail-key {
+  font-weight: 600;
+  color: #333;
+  text-transform: capitalize;
+}
+
+.detail-value {
+  color: #555;
+  font-weight: 400;
+}
+
+/* Dark mode friendly */
+@media (prefers-color-scheme: dark) {
+  .modal-container {
+    background: #c8b9b9;
+    color: #e0e0e0;
+  }
+  .detail-row {
+    border-color: #333;
+  }
+  .modal-title {
+    color: #819dc7;
+    border-color: #482e7d;
+  }
+}
+
+/* Smooth appearance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

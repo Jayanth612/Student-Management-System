@@ -1,0 +1,41 @@
+.attendance-home {
+  padding: 20px;
+  text-align: center;
+  background: transparent;
+  min-height: 80vh;
+}
+
+body.dark .attendance-home p {
+  color: var(--text-muted);
+}
+
+.attendance-home h2 {
+  color: #2b3a67;
+  margin-bottom: 10px;
+}
+
+.attendance-home p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.attendance-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.attendance-btn {
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.attendance-btn:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,404 @@
+/* 🌐 Global Styles */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.4s ease-in-out;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+}
+
+/* 🌞 Light Theme */
+body.light {
+  --bg-color: #f6f8fa;
+  --text-color: #1a1a1a;
+  --card-bg: #ffffffcc;
+  --table-header-bg: #004aad;
+  --table-header-text: #ffffff;
+  --input-bg: #ffffff;
+  --input-border: #d0d7de;
+  --button-bg: #004aad;
+  --button-text: #ffffff;
+  --link-color: #0078d7;
+  --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+/* 🌙 Dark Theme */
+body.dark {
+  --bg-color: #0d1117;
+  --text-color: #e6edf3;
+  --card-bg: rgba(22, 27, 34, 0.85);
+  --table-header-bg: #1f6feb;
+  --table-header-text: #ffffff;
+  --input-bg: #21262d;
+  --input-border: #30363d;
+  --button-bg: #238636;
+  --button-text: #ffffff;
+  --link-color: #58a6ff;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ✨ Smooth Transitions */
+/* Keep theme changes smooth without animating layout, text, and controls. */
+body,
+.form-container,
+.dashboard-container,
+.card,
+input,
+select,
+textarea {
+  transition: background-color 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* HEADER */
+.app-header {
+  background: linear-gradient(90deg, #004aad, #0078d7);
+  color: #fff;
+  padding: 18px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Use a three-column layout for perfect centering */
+.app-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+/* Center title */
+.app-header h1 {
+  grid-column: 2;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* Keep logout & theme toggle on right */
+.header-actions {
+  grid-column: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Ensure left column remains empty for symmetry */
+.app-header::before {
+  content: "";
+  grid-column: 1;
+}
+
+/* Dark mode version */
+body.dark .app-header {
+  background: linear-gradient(90deg, #0d1117, #161b22);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  background: #ffffff;
+  color: #004aad;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: #e0e8ff;
+  transform: scale(1.05);
+}
+
+/* THEME SWITCH (unchanged but polished) */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 64px;
+  height: 34px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #0078d7, #004aad);
+  border-radius: 34px;
+  transition: background-color 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  font-size: 1.2rem;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.theme-switch input:checked + .slider {
+  background: linear-gradient(135deg, #1e1e1e, #3a3a3a);
+}
+
+.theme-switch input:checked + .slider::before {
+  transform: translateX(30px);
+}
+
+/* HEADER ACTIONS */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* 🌗 THEME SWITCH (modern version) */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch {
+  position: relative;
+  width: 62px;
+  height: 32px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 32px;
+  background: linear-gradient(135deg, #0078d7, #004aad);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-size: 1.2rem;
+  transition: all 0.4s ease;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 3px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.4s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.theme-switch input:checked + .slider {
+  background: linear-gradient(135deg, #1e1e1e, #3a3a3a);
+}
+
+.theme-switch input:checked + .slider::before {
+  transform: translateX(30px);
+}
+
+.sun {
+  color: #ffcd38;
+  text-shadow: 0 0 3px #ffcd38;
+}
+
+.moon {
+  color: #b0b8ff;
+  text-shadow: 0 0 3px #8c9eff;
+}
+
+/* 🔘 LOGOUT BUTTON */
+.logout-btn {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logout-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #c10000, #d70024);
+}
+
+/* 📋 FORM + DASHBOARD CONTAINERS */
+.form-container,
+.dashboard-container {
+  max-width: 1100px;
+  margin: 50px auto;
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark .form-container,
+body.dark .dashboard-container {
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05);
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text-color);
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #0078d7;
+  box-shadow: 0 0 6px rgba(0, 120, 215, 0.3);
+}
+
+/* Buttons */
+button {
+  background: var(--button-bg);
+  color: var(--button-text);
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  letter-spacing: 0.4px;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* 📊 TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th {
+  background: var(--table-header-bg);
+  color: var(--table-header-text);
+  padding: 14px 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--input-border);
+}
+
+tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+body.dark tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 🔔 Toast notifications */
+.toast {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-left: 5px solid var(--button-bg);
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px var(--shadow-color);
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-container,
+  .dashboard-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+    align-items: center;
+  }
+}

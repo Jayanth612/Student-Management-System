@@ -1,0 +1,31 @@
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card-bg);
+}
+
+.attendance-table th, .attendance-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--input-border);
+}
+
+.attendance-table th {
+  background: var(--table-header-bg);
+  color: var(--table-header-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.attendance-table tr:hover {
+  background: rgba(0,120,215,0.08);
+  transition: 0.2s ease;
+}
+
+.attendance-container h2 {
+  text-align: center;
+  color: var(--table-header-bg);
+  margin-bottom: 16px;
+}

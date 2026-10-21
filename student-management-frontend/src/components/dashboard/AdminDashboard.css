@@ -1,0 +1,141 @@
+.admin-main-content {
+  margin-left: 230px;
+  padding: 25px;
+  min-height: 100vh;
+  background-color: #f5f7fb;
+  color: #222;
+  overflow-y: auto;
+}
+
+/* Header */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.admin-header h1 {
+  font-size: 1.8rem;
+  color: #0b1e39;
+}
+
+.admin-header p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Cards */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* Card Colors */
+.card.blue { border-left: 5px solid #2563eb; }
+.card.green { border-left: 5px solid #22c55e; }
+.card.orange { border-left: 5px solid #f97316; }
+.card.purple { border-left: 5px solid #8b5cf6; }
+
+/* Chart */
+.chart-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+
+.chart-container h2 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Recent Activity */
+.recent-activity {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.recent-activity h2 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.recent-activity ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recent-activity li {
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  background-color: #f0f4ff;
+  border-radius: 8px;
+}
+
+/* This file is loaded after the shared layout stylesheet, so keep the
+   dashboard shell theme-aware here as well. */
+body.dark .admin-main-content {
+  background: radial-gradient(circle at top right, #1a3155 0%, #0b1120 42%, #080d19 100%);
+  color: #e5edf8;
+}
+
+body.dark .admin-header h1,
+body.dark .dashboard-header h2,
+body.dark .dashboard-main h1,
+body.dark .card h2,
+body.dark .card h3,
+body.dark .chart-container h2,
+body.dark .recent-activity h2 {
+  color: #f1f5fb;
+}
+
+body.dark .card,
+body.dark .chart-container,
+body.dark .recent-activity {
+  background: linear-gradient(145deg, #14233c, #0f1a2d);
+  border: 1px solid #263957;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+body.dark .card p,
+body.dark .admin-header p,
+body.dark .recent-activity li {
+  color: #aebdd1;
+}
+
+body.dark .recent-activity li {
+  background: #1a2b47;
+}

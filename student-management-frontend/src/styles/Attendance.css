@@ -1,0 +1,83 @@
+.attendance-container {
+  max-width: 700px;
+  margin: 50px auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table th, .attendance-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.attendance-table th {
+  background: #007bff;
+  color: white;
+}
+
+.date-picker {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.date-picker label {
+  font-weight: 600;
+}
+
+.date-filter {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-btn, .clear-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.clear-btn {
+  background-color: #dc3545;
+}
+
+.filter-btn:hover {
+  background-color: #0056b3;
+}
+
+.clear-btn:hover {
+  background-color: #a71d2a;
+}
+
+.attendance-summary-card {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.attendance-summary-card div {
+  font-size: 16px;
+  color: #333;
+}
+
+body.dark .attendance-summary-card {
+  background-color: #222;
+  color: #eee;
+  box-shadow: 0 0 8px rgba(255,255,255,0.1);
+}

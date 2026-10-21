@@ -1,0 +1,158 @@
+/* === StudentList.css === */
+
+.container {
+  width: 95%;
+  margin: 30px auto;
+  background: var(--bg-color, #f9f9f9);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--text-color, #333);
+}
+
+.add-btn {
+  background-color: #2e86de;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.add-btn:hover {
+  background-color: #1e6bb8;
+}
+
+/* === Table Styles === */
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  min-width: 900px;
+}
+
+.student-table th,
+.student-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.student-table th {
+  background-color: #2e86de;
+  color: white;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.student-table tr:nth-child(even) {
+  background-color: #f7faff;
+}
+
+.student-table tr:hover {
+  background-color: #eef4ff;
+  transition: background-color 0.2s ease;
+}
+
+/* === Buttons === */
+.edit-btn,
+.delete-btn {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 2px;
+  font-size: 0.9rem;
+  transition: 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #ffcc00;
+  color: #333;
+}
+
+.edit-btn:hover {
+  background-color: #e6b800;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* === Responsive === */
+@media (max-width: 900px) {
+  .student-table th,
+  .student-table td {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  .page-title {
+    font-size: 1.3rem;
+  }
+}
+
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.search-input,
+.filter-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.reset-btn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.reset-btn:hover {
+  background-color: #f57c00;
+}

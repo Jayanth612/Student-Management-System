@@ -1,0 +1,207 @@
+/*
+ * Final theme layer.
+ *
+ * Several older page styles contain literal light-mode colors. This file is
+ * loaded from App after the page styles so the theme contract remains
+ * consistent across every authenticated route.
+ */
+:root {
+  color-scheme: light;
+}
+
+body.light {
+  color-scheme: light;
+  --page-bg: #f4f7fb;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --surface-hover: #eef4ff;
+  --text: #172033;
+  --text-muted: #64748b;
+  --border: #dbe3ee;
+  --input-bg: #ffffff;
+  --input-text: #172033;
+  --heading: #102a43;
+}
+
+body.dark {
+  color-scheme: dark;
+  --page-bg: #0b1220;
+  --surface: #141f33;
+  --surface-muted: #1a2942;
+  --surface-hover: #223858;
+  --text: #e8eef7;
+  --text-muted: #aab9ce;
+  --border: #30435f;
+  --input-bg: #0f1a2d;
+  --input-text: #e8eef7;
+  --heading: #f6f9fd;
+}
+
+body.light,
+body.dark {
+  background: var(--page-bg);
+  color: var(--text);
+}
+
+body.light #root,
+body.dark #root,
+body.light .admin-layout,
+body.dark .admin-layout,
+body.light .student-layout,
+body.dark .student-layout,
+body.light .layout-container,
+body.dark .layout-container {
+  min-height: 100vh;
+  background: var(--page-bg);
+  color: var(--text);
+}
+
+body.dark .admin-main-content,
+body.dark .student-main-content,
+body.dark .teacher-main-content,
+body.dark .dashboard-main,
+body.dark .attendance-dashboard,
+body.dark .container {
+  background: var(--page-bg);
+  color: var(--text);
+}
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark .page-title,
+body.dark .dashboard-header h2,
+body.dark .admin-header h1,
+body.dark .form-container h2,
+body.dark .section-header h2 {
+  color: var(--heading);
+}
+
+body.dark p,
+body.dark label,
+body.dark .muted,
+body.dark .admin-header p {
+  color: var(--text-muted);
+}
+
+body.dark .card,
+body.dark .form-container,
+body.dark .dashboard-container,
+body.dark .attendance-content,
+body.dark .attendance-container,
+body.dark .profile-card,
+body.dark .table-container,
+body.dark .table-wrapper,
+body.dark .user-form,
+body.dark .user-table-card,
+body.dark .chart-container,
+body.dark .recent-activity {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea,
+body.dark .form-group input,
+body.dark .form-group select,
+body.dark .form-group textarea {
+  background: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--border);
+}
+
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+  color: #8fa1ba;
+}
+
+body.dark table,
+body.dark .student-table,
+body.dark .teacher-table {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+body.dark table thead,
+body.dark table th,
+body.dark .student-table th,
+body.dark .teacher-table th {
+  background: #1d6fc1;
+  color: #ffffff;
+  border-color: #2d82d8;
+}
+
+body.dark table tbody tr,
+body.dark table tbody tr:nth-child(even),
+body.dark .student-table tr,
+body.dark .student-table tr:nth-child(even),
+body.dark .teacher-table tr,
+body.dark .teacher-table tr:nth-child(even) {
+  background: var(--surface);
+  color: var(--text);
+}
+
+body.dark table tbody tr:hover,
+body.dark .student-table tr:hover,
+body.dark .teacher-table tr:hover {
+  background: var(--surface-hover);
+}
+
+body.dark table td,
+body.dark .student-table td,
+body.dark .teacher-table td {
+  background: inherit;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+body.dark .attendance-links a {
+  background: var(--surface-muted);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+body.dark .attendance-links a:hover {
+  background: var(--surface-hover);
+}
+
+body.dark .toggle-btn {
+  background: #243550;
+  color: #f5f8fc;
+  border: 1px solid #3b5273;
+}
+
+body.dark .toggle-btn:hover {
+  background: #2e476a;
+}
+
+body.light .toggle-btn {
+  background: #e8eef6;
+  color: #19324f;
+  border: 1px solid #d3deeb;
+}
+
+body.dark .btn-cancel {
+  background: #334155;
+  color: #e8eef7;
+}
+
+body.dark .secondary-btn {
+  background: #203b60;
+  color: #b9d8ff;
+}
+
+body.dark .inline-message.success {
+  background: #123c2b;
+  color: #a7f3c5;
+}
+
+body.dark .inline-message.error {
+  background: #4a1d24;
+  color: #ffc4c9;
+}

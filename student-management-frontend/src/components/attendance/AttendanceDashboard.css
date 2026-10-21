@@ -1,0 +1,99 @@
+.attendance-dashboard {
+  padding: 30px;
+  background: transparent;
+  min-height: 100vh;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.attendance-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.attendance-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.attendance-btn:hover {
+  background-color: #0056b3;
+}
+
+.attendance-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.attendance-dashboard {
+  padding: 20px;
+}
+
+.attendance-section {
+  margin-bottom: 30px;
+}
+
+.attendance-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.attendance-links a {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  background: #f7f7f7;
+  transition: all 0.2s ease;
+}
+
+.attendance-links a:hover {
+  background: #e0e0e0;
+}
+
+.attendance-links a.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+body.dark .attendance-dashboard,
+body.dark .attendance-home {
+  color: var(--text-primary);
+}
+
+body.dark .attendance-dashboard h2,
+body.dark .attendance-home h2,
+body.dark .page-title {
+  color: #f1f5fb;
+}
+
+body.dark .attendance-dashboard .attendance-content {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+}
+
+body.dark .attendance-links a {
+  background: #16243b;
+  border-color: var(--border-color);
+  color: #dbe7f7;
+}

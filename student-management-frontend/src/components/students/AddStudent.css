@@ -1,0 +1,95 @@
+/* 🌟 AddStudent.css – Modern Form Styling */
+
+body {
+  background-color: #f7f9fc;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-container {
+  max-width: 650px;
+  background: #ffffff;
+  margin: 50px auto;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-top: 6px solid #1e88e5;
+  transition: transform 0.3s ease;
+}
+
+.form-container:hover {
+  transform: translateY(-3px);
+}
+
+.form-container h2 {
+  text-align: center;
+  color: #0d47a1;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+/* --- Input Fields --- */
+.student-form input,
+.student-form select,
+.student-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background: #fafbff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.student-form input:focus,
+.student-form select:focus,
+.student-form textarea:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 6px rgba(25, 118, 210, 0.3);
+  background: #fff;
+}
+
+/* --- Textarea --- */
+.student-form textarea {
+  resize: none;
+  height: 90px;
+}
+
+/* --- Submit Button --- */
+.save-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #2196f3, #1976d2);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+  transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+  background: linear-gradient(90deg, #1976d2, #0d47a1);
+  transform: translateY(-2px);
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 25px 30px;
+    margin: 20px;
+  }
+
+  .form-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .save-btn {
+    font-size: 0.9rem;
+  }
+}

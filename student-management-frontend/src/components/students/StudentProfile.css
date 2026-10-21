@@ -1,0 +1,52 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.profile-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #1976d2;
+}
+
+.profile-card {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.profile-item {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.profile-icon {
+  margin-right: 12px;
+  font-size: 22px;
+  color: #1976d2;
+}
+
+.change-btn {
+  position: absolute;
+  top: 100px;
+  right: 30px;
+  background-color: #1976d2;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.change-btn:hover {
+  background-color: #1565c0;
+}
