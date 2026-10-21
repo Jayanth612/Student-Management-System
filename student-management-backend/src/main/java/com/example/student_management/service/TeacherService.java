@@ -6,6 +6,7 @@ import com.example.student_management.repository.TeacherRepository;
 import com.example.student_management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,9 @@ public class TeacherService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<Teacher> getAllTeachers() {
         return teacherRepository.findAll();
     }
@@ -31,7 +35,8 @@ public class TeacherService {
         Teacher savedTeacher = teacherRepository.save(teacher);
 
         if (!userRepository.existsById(savedTeacher.getTeacherId())) {
-            User user = new User(savedTeacher.getTeacherId(), savedTeacher.getTeacherId(), "TEACHER");
+            User user = new User(savedTeacher.getTeacherId(),
+                    passwordEncoder.encode(savedTeacher.getTeacherId()), "TEACHER");
             userRepository.save(user);
         }
 

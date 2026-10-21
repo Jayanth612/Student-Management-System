@@ -7,6 +7,7 @@ import com.example.student_management.model.Teacher;
 import com.example.student_management.repository.UserRepository;
 import com.example.student_management.repository.StudentRepository;
 import com.example.student_management.repository.TeacherRepository;
+import com.example.student_management.config.JwtService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -30,9 +33,19 @@ public class AuthController {
     @Autowired
     private TeacherRepository teacherRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtService jwtService;
+
     // ✅ LOGIN
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User loginRequest) {
+        if (loginRequest == null || loginRequest.getUsername() == null
+                || loginRequest.getPassword() == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Username and password are required"));
+        }
         Optional<User> userOpt = userRepository.findById(loginRequest.getUsername());
 
         if (userOpt.isEmpty()) {
@@ -41,9 +54,17 @@ public class AuthController {
 
         User user = userOpt.get();
 
-        if (!user.getPassword().equals(loginRequest.getPassword())) {
+        boolean passwordMatches = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
+        if (!passwordMatches && user.getPassword().equals(loginRequest.getPassword())) {
+            user.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+            userRepository.save(user);
+            passwordMatches = true;
+        }
+        if (!passwordMatches) {
             return ResponseEntity.badRequest().body(Map.of("error", "Invalid username or password"));
         }
+
+        String token = jwtService.generateToken(user.getUsername(), user.getRole().toUpperCase());
 
         // ✅ ADMIN LOGIN
         if ("ADMIN".equalsIgnoreCase(user.getRole())) {
@@ -51,6 +72,7 @@ public class AuthController {
             return ResponseEntity.ok(Map.of(
                     "username", user.getUsername(),
                     "role", "ADMIN",
+                    "token", token,
                     "students", students
             ));
         }
@@ -62,6 +84,7 @@ public class AuthController {
                 return ResponseEntity.ok(Map.of(
                         "username", user.getUsername(),
                         "role", "STUDENT",
+                        "token", token,
                         "student", studentOpt.get()
                 ));
             } else {
@@ -76,6 +99,7 @@ public class AuthController {
                 return ResponseEntity.ok(Map.of(
                         "username", user.getUsername(),
                         "role", "TEACHER",
+                        "token", token,
                         "teacher", teacherOpt.get()
                 ));
             } else {
@@ -88,8 +112,9 @@ public class AuthController {
 
     // ✅ CHANGE PASSWORD
     @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> req) {
-        String username = req.get("username");
+    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> req,
+                                            Authentication authentication) {
+        String username = authentication.getName();
         String oldPassword = req.get("oldPassword");
         String newPassword = req.get("newPassword");
 
@@ -104,14 +129,22 @@ public class AuthController {
 
         User user = userOpt.get();
 
-        if (!user.getPassword().equals(oldPassword)) {
+        if (oldPassword == null || newPassword == null
+                || !passwordEncoder.matches(oldPassword, user.getPassword())
+                && !user.getPassword().equals(oldPassword)) {
             return ResponseEntity.badRequest().body(Map.of(
                     "success", false,
                     "message", "Old password is incorrect"
             ));
         }
 
-        user.setPassword(newPassword);
+        if (newPassword.length() < 8) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", "New password must contain at least 8 characters"
+            ));
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
         return ResponseEntity.ok(Map.of(

@@ -2,8 +2,14 @@ package com.example.student_management.controller;
 
 import com.example.student_management.model.StudentAttendance;
 import com.example.student_management.repository.StudentAttendanceRepository;
+import com.example.student_management.repository.StudentRepository;
+import com.example.student_management.model.Student;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @RestController
@@ -12,34 +18,55 @@ import java.util.*;
 public class StudentAttendanceController {
 
     private final StudentAttendanceRepository repo;
+    private final StudentRepository studentRepository;
 
-    public StudentAttendanceController(StudentAttendanceRepository repo) {
+    public StudentAttendanceController(StudentAttendanceRepository repo, StudentRepository studentRepository) {
         this.repo = repo;
+        this.studentRepository = studentRepository;
     }
 
     /**
      * ✅ Mark or update attendance for students
      */
     @PostMapping("/mark")
+    @Transactional
     public String markAttendance(@RequestBody List<StudentAttendance> attendanceList) {
         if (attendanceList == null || attendanceList.isEmpty()) {
             return "❌ No attendance data received.";
         }
 
         LocalDate date = attendanceList.get(0).getDate() != null
-                ? attendanceList.get(0).getDate()
-                : LocalDate.now();
+                ? attendanceList.get(0).getDate() : LocalDate.now();
 
         int inserted = 0, updated = 0;
 
         for (StudentAttendance record : attendanceList) {
+            if (record == null || record.getRollNumber() == null || record.getRollNumber().isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Every record needs a roll number");
+            }
+            Student student = studentRepository.findById(record.getRollNumber())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Student not found: " + record.getRollNumber()));
+            if (record.getDate() != null && !date.equals(record.getDate())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "All attendance records must use the same date");
+            }
             String roll = record.getRollNumber();
-            String status = (record.getStatus() != null &&
-                    record.getStatus().trim().toLowerCase().startsWith("p"))
-                    ? "Present" : "Absent";
+            String normalizedStatus = record.getStatus() == null ? "" : record.getStatus().trim();
+            String status;
+            if ("present".equalsIgnoreCase(normalizedStatus)) {
+                status = "Present";
+            } else if ("absent".equalsIgnoreCase(normalizedStatus)) {
+                status = "Absent";
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Status must be Present or Absent");
+            }
 
             record.setStatus(status);
             record.setDate(date);
+            record.setName(student.getName());
+            record.setStandard(student.getStandard());
 
             // ✅ Check if the student already has attendance for this date
             Optional<StudentAttendance> existingOpt = repo.findByRollNumberAndDate(roll, date);
@@ -70,7 +97,13 @@ public class StudentAttendanceController {
      */
     @GetMapping("/by-date")
     public List<StudentAttendance> getAttendanceByDate(@RequestParam String date) {
-        LocalDate localDate = LocalDate.parse(date);
+        LocalDate localDate;
+        try {
+            localDate = LocalDate.parse(date);
+        } catch (DateTimeParseException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Date must use ISO format yyyy-MM-dd", exception);
+        }
         return repo.findByDate(localDate);
     }
 
@@ -108,7 +141,7 @@ public class StudentAttendanceController {
             names.put(roll, record.getName());
             standards.put(roll, record.getStandard());
 
-            if (status != null && status.trim().toLowerCase().startsWith("p")) {
+            if (status != null && "Present".equalsIgnoreCase(status.trim())) {
                 presentCount.put(roll, presentCount.getOrDefault(roll, 0L) + 1);
             }
         }

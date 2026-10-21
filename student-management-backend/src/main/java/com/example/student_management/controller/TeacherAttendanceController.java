@@ -2,8 +2,14 @@ package com.example.student_management.controller;
 
 import com.example.student_management.model.TeacherAttendance;
 import com.example.student_management.repository.TeacherAttendanceRepository;
+import com.example.student_management.repository.TeacherRepository;
+import com.example.student_management.model.Teacher;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @RestController
@@ -12,15 +18,18 @@ import java.util.*;
 public class TeacherAttendanceController {
 
     private final TeacherAttendanceRepository repo;
+    private final TeacherRepository teacherRepository;
 
-    public TeacherAttendanceController(TeacherAttendanceRepository repo) {
+    public TeacherAttendanceController(TeacherAttendanceRepository repo, TeacherRepository teacherRepository) {
         this.repo = repo;
+        this.teacherRepository = teacherRepository;
     }
 
     /**
      * ✅ Mark or update teacher attendance (no duplicates)
      */
     @PostMapping("/mark")
+    @Transactional
     public String markAttendance(@RequestBody List<TeacherAttendance> attendanceList) {
         if (attendanceList == null || attendanceList.isEmpty()) {
             return "❌ No attendance data received.";
@@ -33,13 +42,32 @@ public class TeacherAttendanceController {
         int inserted = 0, updated = 0;
 
         for (TeacherAttendance record : attendanceList) {
+            if (record == null || record.getTeacherId() == null || record.getTeacherId().isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Every record needs a teacher ID");
+            }
+            Teacher teacher = teacherRepository.findById(record.getTeacherId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Teacher not found: " + record.getTeacherId()));
+            if (record.getDate() != null && !date.equals(record.getDate())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "All attendance records must use the same date");
+            }
             String teacherId = record.getTeacherId();
-            String status = (record.getStatus() != null &&
-                    record.getStatus().trim().toLowerCase().startsWith("p"))
-                    ? "Present" : "Absent";
+            String normalizedStatus = record.getStatus() == null ? "" : record.getStatus().trim();
+            String status;
+            if ("present".equalsIgnoreCase(normalizedStatus)) {
+                status = "Present";
+            } else if ("absent".equalsIgnoreCase(normalizedStatus)) {
+                status = "Absent";
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Status must be Present or Absent");
+            }
 
             record.setStatus(status);
             record.setDate(date);
+            record.setName(teacher.getName());
+            record.setSubject(teacher.getSubject());
 
             Optional<TeacherAttendance> existingOpt = repo.findByTeacherIdAndDate(teacherId, date);
 
@@ -66,7 +94,13 @@ public class TeacherAttendanceController {
      */
     @GetMapping("/by-date")
     public List<TeacherAttendance> getAttendanceByDate(@RequestParam String date) {
-        LocalDate localDate = LocalDate.parse(date);
+        LocalDate localDate;
+        try {
+            localDate = LocalDate.parse(date);
+        } catch (DateTimeParseException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Date must use ISO format yyyy-MM-dd", exception);
+        }
         return repo.findByDate(localDate);
     }
 
@@ -96,7 +130,7 @@ public class TeacherAttendanceController {
             names.put(tid, record.getName());
             subjects.put(tid, record.getSubject());
 
-            if (status != null && status.trim().toLowerCase().startsWith("p")) {
+            if (status != null && "Present".equalsIgnoreCase(status.trim())) {
                 presentCount.put(tid, presentCount.getOrDefault(tid, 0L) + 1);
             }
         }

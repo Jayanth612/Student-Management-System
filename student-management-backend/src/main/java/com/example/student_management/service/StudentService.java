@@ -6,6 +6,7 @@ import com.example.student_management.repository.StudentRepository;
 import com.example.student_management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,9 @@ public class StudentService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // ✅ Get all students
     public List<Student> getAllStudents() {
@@ -34,7 +38,8 @@ public class StudentService {
         Student savedStudent = studentRepository.save(student);
 
         if (!userRepository.existsById(savedStudent.getRollNumber())) {
-            User user = new User(savedStudent.getRollNumber(), savedStudent.getRollNumber(), "STUDENT");
+            User user = new User(savedStudent.getRollNumber(),
+                    passwordEncoder.encode(savedStudent.getRollNumber()), "STUDENT");
             userRepository.save(user);
         }
 

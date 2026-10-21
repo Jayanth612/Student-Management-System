@@ -1,9 +1,12 @@
-.   package com.example.student_management.model;
+package com.example.student_management.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "student_attendance",
+        uniqueConstraints = @UniqueConstraint(name = "uk_student_attendance_roll_date",
+                columnNames = {"roll_number", "date"}))
 public class StudentAttendance {
 
     @Id
